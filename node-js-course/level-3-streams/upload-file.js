@@ -13,6 +13,7 @@ http.createServer(function(request, response) {
         response.end('uploaded!')
     });
 }).listen(8080);
+console.log('listening on port 8080...');
 
 // Using it:
 // curl --upload-file readme.md http://localhost:8080

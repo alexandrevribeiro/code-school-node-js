@@ -20,3 +20,4 @@ http.createServer(function(request, response) {
     // request.pipe(response);
     
 }).listen(8080);
+console.log('listening on port 8080...');
