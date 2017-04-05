@@ -7,7 +7,7 @@ http.createServer(function(request, response) {
 
     request.on('readble', function() {
       var chunk = null;
-      while ((chunk = request.read()) != null) {
+      while ((chunk = request.read()) !== null) {
         response.write(chunk);
       }
     });

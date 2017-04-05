@@ -12,7 +12,7 @@ http.createServer(function(request, response) {
     request.on('readable', function() {
         var chunk = null;
 
-        while((chunk = request.read()) != null) {
+        while((chunk = request.read()) !== null) {
             uploadedBytes += chunk.length;
             var progress = (uploadedBytes / fileBytes) * 100;
             response.write('Progress: ' + parseInt(progress, 10) + '%\n');
