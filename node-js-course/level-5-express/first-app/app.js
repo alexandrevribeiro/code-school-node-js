@@ -18,6 +18,7 @@ app.get('/github/users/:username', function(req, response) {
             if (err) return;
             response.locals = { name : user.name, repos: repos};
             response.render('github-user.ejs');
+            response.end();
         });
     });
 });
