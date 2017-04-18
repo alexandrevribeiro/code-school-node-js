@@ -1,7 +1,0 @@
-{
-    "name" : "sample-app",
-    "version": "1",
-    "dependencies": {
-        "connect": "^3.6.0"
-    }
-}
