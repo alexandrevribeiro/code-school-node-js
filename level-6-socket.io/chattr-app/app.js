@@ -6,11 +6,15 @@ app.get('/', function(request, response) {
     response.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', function(client) {
+io.on('connection', function(socket) {
     console.log('Client connected...');
 
-    // Emits the 'messages' event on the client
-    client.emit('messages', { hello: 'world'});
+    // Listen for 'messages' events
+    socket.on('chat-message', function(data) {
+        console.log(data);
+        // Broadcasts message to all other clients connected
+        socket.broadcast.emit('chat-message', data);
+    });
 });
 
 httpServer.listen(8080, function() {
