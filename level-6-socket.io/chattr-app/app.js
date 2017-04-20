@@ -9,11 +9,22 @@ app.get('/', function(request, response) {
 io.on('connection', function(socket) {
     console.log('Client connected...');
 
+    // Listens for 'join' event and sets the 'nickname' associated with this socket
+    socket.on('join', function(name) {
+        socket.nickname = name;
+        console.log(name + ' joined!');
+    });
+
     // Listen for 'messages' events
-    socket.on('chat-message', function(data) {
-        console.log(data);
-        // Broadcasts message to all other clients connected
-        socket.broadcast.emit('chat-message', data);
+    socket.on('chat-message', function(msg) {
+        var message = socket.nickname + ': ' + msg;
+        console.log(message);
+
+        // Broadcasts the message to all other sockets connected
+        socket.broadcast.emit('chat-message', message);
+
+        // Then sends the same message back to our socket
+        socket.emit('chat-message', message);        
     });
 });
 

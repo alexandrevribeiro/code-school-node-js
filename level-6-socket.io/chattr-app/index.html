@@ -19,6 +19,16 @@
     $(function () {
         var socket = io();
 
+        socket.on('connect', function(data) {
+            var nickname = prompt('What is your nickname?');
+            socket.emit('join', nickname);
+        });
+
+        // Listen the 'chat message' from the server
+        socket.on('chat-message', function(msg){
+            $('#messages').append($('<li>').text(msg));
+        });
+
         $('form').submit(function() {
             var message = $('#message_input').val();
             $('#message_input').val('');
@@ -26,12 +36,7 @@
             // Emits the 'messages' event on the server
             socket.emit('chat-message', message);
             return false;
-        });
-
-        // Listen the 'chat message' from the server
-        socket.on('chat-message', function(msg){
-            $('#messages').append($('<li>').text(msg));
-        });
+        });        
     });
     </script>
   <body>
