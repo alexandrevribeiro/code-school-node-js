@@ -1,7 +1,10 @@
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+var app = require('express')();
+var httpServer = require('http').Server(app);
+var io = require('socket.io')(httpServer);
+
+app.get('/', function(request, response) {
+    response.sendFile(__dirname + '/index.html');
+});
 
 io.on('connection', function(client) {
     console.log('Client connected...');
@@ -10,8 +13,6 @@ io.on('connection', function(client) {
     client.emit('messages', { hello: 'world'});
 });
 
-app.get('/', function(request, response) {
-    response.sendFile(__dirname + '/index.html');
+httpServer.listen(8080, function() {
+    console.log('listening on *:8080');
 });
-
-app.listen(8080);

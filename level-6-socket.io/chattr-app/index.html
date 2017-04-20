@@ -1,7 +1,7 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <script>
-    var socket = io.connet('http://localhost:8080');
+    var socket = io();
 
     socket.on('messages', function(data) {
         alert(data.hello);
