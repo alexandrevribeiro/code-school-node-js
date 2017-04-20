@@ -17,15 +17,15 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
     $(function () {
-        var socket = io();
+        var serverSocket = io();
 
-        socket.on('connect', function(data) {
+        serverSocket.on('connect', function(data) {
             var nickname = prompt('What is your nickname?');
-            socket.emit('join', nickname);
+            serverSocket.emit('join', nickname);
         });
 
         // Listen the 'chat message' from the server
-        socket.on('chat-message', function(msg){
+        serverSocket.on('chat-message', function(msg){
             $('#messages').append($('<li>').text(msg));
         });
 
@@ -34,7 +34,7 @@
             $('#message_input').val('');
 
             // Emits the 'messages' event on the server
-            socket.emit('chat-message', message);
+            serverSocket.emit('chat-message', message);
             return false;
         });        
     });

@@ -6,25 +6,25 @@ app.get('/', function(request, response) {
     response.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', function(socket) {
+io.on('connection', function(clientSocket) {
     console.log('Client connected...');
 
     // Listens for 'join' event and sets the 'nickname' associated with this socket
-    socket.on('join', function(name) {
-        socket.nickname = name;
+    clientSocket.on('join', function(name) {
+        clientSocket.nickname = name;
         console.log(name + ' joined!');
     });
 
     // Listen for 'messages' events
-    socket.on('chat-message', function(msg) {
-        var message = socket.nickname + ': ' + msg;
+    clientSocket.on('chat-message', function(msg) {
+        var message = clientSocket.nickname + ': ' + msg;
         console.log(message);
 
         // Broadcasts the message to all other sockets connected
-        socket.broadcast.emit('chat-message', message);
+        clientSocket.broadcast.emit('chat-message', message);
 
         // Then sends the same message back to our socket
-        socket.emit('chat-message', message);        
+        clientSocket.emit('chat-message', message);        
     });
 });
 
