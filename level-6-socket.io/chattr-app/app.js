@@ -12,6 +12,7 @@ io.on('connection', function(clientSocket) {
     // Listens for 'join' event and sets the 'nickname' associated with this socket
     clientSocket.on('join', function(name) {
         clientSocket.nickname = name;
+        clientSocket.broadcast.emit('join', name);
         console.log(name + ' joined!');
     });
 

@@ -11,6 +11,14 @@
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
+      #joined-users-container {  
+        position: fixed;
+        bottom: 50px;
+        left: 88%;
+        background: rgba(28, 60, 130, 0.65);
+        width: 155px;
+        padding: 10px;
+      }
     </style>
   </head>
   <script src="/socket.io/socket.io.js"></script>
@@ -29,6 +37,22 @@
             $('#messages').append($('<li>').text(msg));
         });
 
+        serverSocket.on('join', function(name) {
+
+          if (!name) return;
+
+          var msg = name + ' joined!';
+          $('#joined-users').append($('<li>').text(msg));
+          $('#joined-users-container').fadeIn('slow');
+
+          setTimeout(function(){             
+            $('#joined-users-container').fadeOut('slow', function() {
+              $('#joined-users li').remove();
+            });
+           }, 3000);
+
+        });
+
         $('form').submit(function() {
             var message = $('#message_input').val();
             $('#message_input').val('');
@@ -41,6 +65,11 @@
     </script>
   <body>
     <ul id="messages"></ul>
+
+    <div id="joined-users-container" style="display: none;">
+      <ul id="joined-users" style="list-style-type: none;">
+      </ul>
+    </div>
     <form action="">
       <input id="message_input" autocomplete="off" /><button>Send</button>
     </form>
