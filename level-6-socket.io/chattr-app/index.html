@@ -1,0 +1,11 @@
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+    var socket = io.connet('http://localhost:8080');
+
+    socket.on('messages', function(data) {
+        alert(data.hello);
+    });
+</script>
+
+<h1>Chat app!!!</h1>
